@@ -1,16 +1,14 @@
-# online_store
+# Интернет-магазин
 
-A new Flutter project.
+Приложение - интернет магазин с возможностью просмотреть каталог товаров, список товаров, карточку товара
 
-## Getting Started
+# Экран Список товаров
+Товары можно 2 способами посмотреть:
+- Нажав на навигационном меню на кнопку Продукты (появятся все товары)
+- Выбрав любую из категорий на Экране Категорий (появятся все товары в данной категории).
+  
+# Экран Детали товара
+Название категории появиться только по маршруту: 
 
-This project is a starting point for a Flutter application.
+Экран Категорий => Выбрать категорию => Выбрать товар
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
