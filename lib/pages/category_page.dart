@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_store/controllers/category_controller.dart';
+import 'package:online_store/pages/models_args/product_args.dart';
 import 'package:online_store/routes/routes.dart';
 import 'package:online_store/widgets/image_network.dart';
 
@@ -61,7 +62,10 @@ class _CategoryPageState extends State<CategoryPage> {
         Navigator.pushNamed(
           context,
           AppPage.products,
-          arguments: controller.categories[index].categoryId,
+          arguments: ProductArgs(
+            categoryId: controller.categories[index].categoryId,
+            title: controller.categories[index].title,
+          ),
         );
       },
       borderRadius: BorderRadius.circular(24),

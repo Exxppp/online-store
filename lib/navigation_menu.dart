@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_store/pages/category_page.dart';
 import 'package:online_store/pages/products_page.dart';
+import 'package:online_store/pages/models_args/product_args.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -42,5 +43,8 @@ class NavigationMenu extends StatelessWidget {
 class NavigationController {
   final ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
 
-  final pages = [const CategoryPage(), const ProductsPage()];
+  final pages = [
+    const CategoryPage(),
+    const ProductsPage(productArgs: ProductArgs(title: 'Товары')),
+  ];
 }

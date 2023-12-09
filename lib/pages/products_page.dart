@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:online_store/controllers/products_controller.dart';
+import 'package:online_store/pages/models_args/product_args.dart';
 import 'package:online_store/routes/routes.dart';
 import 'package:online_store/widgets/image_network.dart';
 
 class ProductsPage extends StatefulWidget {
-  final int? categoryId;
+  final ProductArgs productArgs;
 
-  const ProductsPage({super.key, this.categoryId});
+  const ProductsPage({super.key, required this.productArgs});
 
   @override
   State<ProductsPage> createState() => _ProductsPageState();
@@ -18,7 +19,7 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   void initState() {
     super.initState();
-    controller = ProductsController(categoryId: widget.categoryId);
+    controller = ProductsController(categoryId: widget.productArgs.categoryId);
     controller.addListener(_controllerListener);
   }
 
@@ -38,8 +39,8 @@ class _ProductsPageState extends State<ProductsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Товары',
+        title: Text(
+          widget.productArgs.title,
         ),
       ),
       body: ListView.builder(

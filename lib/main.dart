@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_store/pages/models_args/product_args.dart';
 import 'package:online_store/routes/routes.dart';
 import 'package:online_store/navigation_menu.dart';
 import 'package:online_store/pages/category_page.dart';
@@ -26,8 +27,8 @@ class MyApp extends StatelessWidget {
               case AppPage.category:
                 return const CategoryPage();
               case AppPage.products:
-                final int? categoryId = settings.arguments as int?;
-                return ProductsPage(categoryId: categoryId);
+                final ProductArgs productArgs = settings.arguments as ProductArgs;
+                return ProductsPage(productArgs: productArgs);
               case AppPage.productDetail:
                 final int productId = settings.arguments as int;
                 return ProductDetailPage(productId: productId);
