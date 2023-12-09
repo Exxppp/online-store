@@ -11,12 +11,11 @@ class ProductApi extends BaseApi {
     if (categoryId != null) {
       params.addAll({'categoryId': categoryId.toString()});
     }
-    print(params);
 
     final jsonData = await get(relativePath, params: params);
-    final List<ProductModel> categories = (jsonData['data'] as List)
+    final List<ProductModel> products = (jsonData['data'] as List)
         .map((productJson) => ProductModel.fromJson(productJson))
         .toList();
-    return categories;
+    return products;
   }
 }

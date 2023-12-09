@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:online_store/pages/category_page.dart';
 import 'package:online_store/pages/products_page.dart';
 
@@ -8,29 +7,40 @@ class NavigationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(NavigationController());
+    final controller = NavigationController();
 
     return Scaffold(
-      bottomNavigationBar: Obx(
-        () => NavigationBar(
-          height: 80,
-          backgroundColor: Colors.black12,
-          selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (index) =>
-              controller.selectedIndex.value = index,
-          destinations: const [
-            NavigationDestination(icon: Icon(Icons.apps_outlined), label: 'Category'),
-            NavigationDestination(icon: Icon(Icons.list), label: 'Products'),
-          ],
+        bottomNavigationBar: ValueListenableBuilder(
+          valueListenable: controller.selectedIndex,
+          builder: (context, index, _) => NavigationBar(
+            height: 80,
+            backgroundColor: Colors.black12,
+            selectedIndex: controller.selectedIndex.value,
+            onDestinationSelected: (int index) =>
+                controller.selectedIndex.value = index,
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.apps_outlined),
+                label: 'Category',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.list),
+                label: 'Products',
+              ),
+            ],
+          ),
         ),
-      ),
-      body:Obx(() => controller.pages[controller.selectedIndex.value]),
-    );
+        body: ValueListenableBuilder(
+          valueListenable: controller.selectedIndex,
+          builder: (context, index, _) {
+            return controller.pages[index];
+          },
+        ));
   }
 }
 
-class NavigationController extends GetxController {
-  final Rx<int> selectedIndex = 0.obs;
+class NavigationController {
+  final ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
 
   final pages = [const CategoryPage(), const ProductsPage()];
 }

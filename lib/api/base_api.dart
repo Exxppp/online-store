@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class BaseApi {
@@ -23,7 +22,6 @@ class BaseApi {
     final queryParams = params ?? {};
     queryParams['appKey'] = appKey;
     final uri = Uri.http(baseUrl, relativePath, queryParams);
-    debugPrint(uri.toString());
     return uri;
   }
 
