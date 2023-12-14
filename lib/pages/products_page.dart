@@ -20,10 +20,11 @@ class ProductsPage extends BaseListPage {
   _ProductsPageState createState() => _ProductsPageState();
 }
 
-class _ProductsPageState extends BaseListPageState<ProductsPage> {
+class _ProductsPageState
+    extends BaseListPageState<ProductsPage, ProductsController> {
 
   @override
-  Widget body() {
+  Widget buildBody(context) {
     if (controller.isLoading) {
       return const Center(child: CircularProgressIndicator());
     } else if (controller.loadingError) {

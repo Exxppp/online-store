@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 
-class BaseListPage<T> extends StatefulWidget {
+abstract class BaseListPage<T, ControllerType> extends StatefulWidget {
   final String title;
-  final ChangeNotifier controller;
+  final ControllerType controller;
 
   const BaseListPage({
     Key? key,
     required this.title,
     required this.controller,
   }) : super(key: key);
-
-  @override
-  BaseListPageState createState() => BaseListPageState();
 }
 
-class BaseListPageState<T extends BaseListPage> extends State<T> {
-  late ChangeNotifier _controller;
-  late String _title;
+abstract class BaseListPageState<T extends BaseListPage,
+    ControllerType extends ChangeNotifier> extends State<T> {
+  late final String _title;
+  late final ControllerType _controller;
 
-  get controller {
+  ControllerType get controller {
     return _controller;
   }
 
@@ -52,11 +50,9 @@ class BaseListPageState<T extends BaseListPage> extends State<T> {
       appBar: AppBar(
         title: Text(_title),
       ),
-      body: body(),
+      body: buildBody(context),
     );
   }
 
-  Widget body() {
-    return Container();
-  }
+  Widget buildBody(BuildContext context);
 }

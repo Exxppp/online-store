@@ -18,10 +18,11 @@ class CategoryPage extends BaseListPage {
   _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends BaseListPageState<CategoryPage> {
+class _CategoryPageState
+    extends BaseListPageState<CategoryPage, CategoryController> {
 
   @override
-  Widget body() {
+  Widget buildBody(context) {
     if (controller.isLoading) {
       return const Center(child: CircularProgressIndicator());
     } else if (controller.loadingError) {

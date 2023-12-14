@@ -42,10 +42,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         appBar: AppBar(
           title: const Text(title),
         ),
-        body: _buildBody());
+        body: buildBody());
   }
 
-  Widget _buildBody() {
+  Widget buildBody() {
     if (controller.isLoading) {
       return const Center(child: CircularProgressIndicator());
     } else if (controller.loadingError) {
