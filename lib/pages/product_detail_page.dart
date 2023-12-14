@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_store/controllers/product_detail_controller.dart';
+import 'package:online_store/widgets/data_upload_error.dart';
 import 'package:online_store/widgets/image_network.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -38,40 +39,46 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     const title = 'Товар';
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(title),
-      ),
-      body: controller.isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView(
-              children: [
-                // Product image
-                ImageNetwork(
-                  url: controller.product.imageUrl,
-                  height: 400,
-                  fit: BoxFit.contain,
-                ),
+        appBar: AppBar(
+          title: const Text(title),
+        ),
+        body: _buildBody());
+  }
 
-                // Product title
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 10.0),
-                  child: Text(
-                    controller.product.title,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18.0),
-                  ),
-                ),
+  Widget _buildBody() {
+    if (controller.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (controller.loadingError) {
+      return const DataUploadError();
+    } else {
+      return ListView(
+        children: [
+          // Product image
+          ImageNetwork(
+            url: controller.product.imageUrl,
+            height: 400,
+            fit: BoxFit.contain,
+          ),
 
-                // Product description
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-                  child: Text(
-                      'Описание товара: ${controller.product.productDescription ?? ''}'),
-                ),
-              ],
+          // Product title
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+            child: Text(
+              controller.product.title,
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
             ),
-    );
+          ),
+
+          // Product description
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+            child: Text(
+                'Описание товара: ${controller.product.productDescription ?? ''}'),
+          ),
+        ],
+      );
+    }
   }
 }

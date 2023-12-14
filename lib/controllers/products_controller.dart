@@ -6,6 +6,7 @@ class ProductsController extends ChangeNotifier {
   late int? categoryId;
   final List<ProductModel> products = <ProductModel>[];
   final int itemsPerPage = 15;
+  bool loadingError = false;
   bool isLoading = false;
   bool isGetAllProducts = false;
   int offset = 0;
@@ -31,10 +32,12 @@ class ProductsController extends ChangeNotifier {
           .getProducts(offset: offset, categoryId: categoryId);
       if (loadedProducts.isNotEmpty) {
         products.addAll(loadedProducts);
-        offset += itemsPerPage;
+        offset = products.length;
       } else {
         isGetAllProducts = true;
       }
+    } catch (error) {
+      loadingError = true;
     } finally {
       isLoading = false;
       notifyListeners();

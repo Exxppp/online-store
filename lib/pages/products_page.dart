@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:online_store/controllers/products_controller.dart';
 import 'package:online_store/pages/models_args/product_args.dart';
 import 'package:online_store/routes/routes.dart';
-import 'package:online_store/widgets/image_network.dart';
+import 'package:online_store/widgets/data_upload_error.dart';
+import 'package:online_store/widgets/product_tile.dart';
 
 class ProductsPage extends StatefulWidget {
   final ProductArgs productArgs;
@@ -38,51 +39,36 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.productArgs.title,
+        appBar: AppBar(
+          title: Text(
+            widget.productArgs.title,
+          ),
         ),
-      ),
-      body: ListView.builder(
-        controller: controller.scrollController,
-        itemCount: controller.products.length,
-        itemExtent: 100,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              tileColor: Colors.grey.withOpacity(0.4),
-              onTap: () {
+        body: _buildBody());
+  }
+
+  Widget _buildBody() {
+    if (controller.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (controller.loadingError) {
+      return const DataUploadError();
+    } else {
+      return ListView.builder(
+          controller: controller.scrollController,
+          itemCount: controller.products.length,
+          itemExtent: 100,
+          itemBuilder: (context, index) {
+            return ProductTile(
+              pushNamed: () {
                 Navigator.pushNamed(
                   context,
                   AppPage.productDetail,
                   arguments: controller.products[index].productId,
                 );
               },
-              leading: ImageNetwork(
-                url: controller.products[index].imageUrl,
-                width: 70,
-                height: 85,
-                fit: BoxFit.contain,
-              ),
-              title: Text(
-                controller.products[index].title,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                softWrap: false,
-              ),
-              subtitle: Text(
-                '\nЦена:  ${controller.products[index].price}',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                softWrap: false,
-              ),
-            ),
-          );
-        },
-      ),
-    );
+              product: controller.products[index],
+            );
+          });
+    }
   }
 }
