@@ -1,52 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:online_store/controllers/category_controller.dart';
+import 'package:online_store/pages/base_list_page.dart';
 import 'package:online_store/pages/models_args/product_args.dart';
 import 'package:online_store/routes/routes.dart';
 import 'package:online_store/widgets/category_grid_item.dart';
 import 'package:online_store/widgets/data_upload_error.dart';
 
-class CategoryPage extends StatefulWidget {
-  const CategoryPage({super.key});
+class CategoryPage extends BaseListPage {
+  CategoryPage({Key? key})
+      : super(
+          key: key,
+          controller: CategoryController(),
+          title: 'Категории',
+        );
 
   @override
-  State<CategoryPage> createState() => _CategoryPageState();
+  _CategoryPageState createState() => _CategoryPageState();
 }
 
-class _CategoryPageState extends State<CategoryPage> {
-  late CategoryController controller;
+class _CategoryPageState extends BaseListPageState<CategoryPage> {
 
   @override
-  void initState() {
-    super.initState();
-    controller = CategoryController();
-    controller.addListener(_controllerListener);
-  }
-
-  @override
-  void dispose() {
-    controller.removeListener(_controllerListener);
-    super.dispose();
-  }
-
-  void _controllerListener() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const title = 'Категории';
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(title),
-      ),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
+  Widget body() {
     if (controller.isLoading) {
       return const Center(child: CircularProgressIndicator());
     } else if (controller.loadingError) {

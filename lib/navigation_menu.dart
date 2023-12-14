@@ -44,7 +44,7 @@ class NavigationController {
   final ValueNotifier<int> selectedIndex = ValueNotifier<int>(0);
 
   final pages = [
-    const CategoryPage(),
-    const ProductsPage(productArgs: ProductArgs(title: 'Товары')),
+    CategoryPage(),
+    ProductsPage(productArgs: const ProductArgs(title: 'Товары')),
   ];
 }

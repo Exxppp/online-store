@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
               case AppPage.navbar:
                 return const NavigationMenu();
               case AppPage.category:
-                return const CategoryPage();
+                return CategoryPage();
               case AppPage.products:
                 final ProductArgs productArgs = settings.arguments as ProductArgs;
                 return ProductsPage(productArgs: productArgs);
