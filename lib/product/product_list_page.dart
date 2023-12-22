@@ -21,34 +21,34 @@ class ProductListPage extends BaseListPage {
 class _ProductListPageState
     extends BaseListPageState<ProductListPage, ProductListModel> {
   @override
-  ProductListModel createController() {
+  ProductListModel createModel() {
     return ProductListModel(categoryId: widget.categoryId);
   }
 
   @override
   Widget buildBody(context) {
-    if (controller.isLoading && controller.products.isEmpty) {
+    if (pageModel.isLoading && pageModel.products.isEmpty) {
       return const Center(child: CircularProgressIndicator());
-    } else if (controller.loadingError != null) {
-      return DataUploadErrorWidget(textError: controller.loadingError);
+    } else if (pageModel.loadingError != null) {
+      return DataUploadErrorWidget(textError: pageModel.loadingError);
     } else {
       return ListView.builder(
-        controller: controller.scrollController,
-        itemCount: controller.products.length + 1,
+        controller: pageModel.scrollController,
+        itemCount: pageModel.products.length + 1,
         itemExtent: 100,
         itemBuilder: (context, index) {
-          if (index < controller.products.length) {
+          if (index < pageModel.products.length) {
             return ProductTileWidget(
               onTap: () {
                 Navigator.push(
                   context,
                   AppRoutes.productDetails(
-                      controller.products[index].productId),
+                      pageModel.products[index].productId),
                 );
               },
-              product: controller.products[index],
+              product: pageModel.products[index],
             );
-          } else if (controller.isLoading) {
+          } else if (pageModel.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
           return null;

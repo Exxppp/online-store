@@ -6,17 +6,17 @@ class BottomNavigationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = NavigationModel();
+    final pageModel = NavigationModel();
 
     return Scaffold(
       bottomNavigationBar: ValueListenableBuilder(
-        valueListenable: controller.selectedIndex,
+        valueListenable: pageModel.selectedIndex,
         builder: (context, index, _) => NavigationBar(
           height: 80,
           backgroundColor: Colors.black12,
-          selectedIndex: controller.selectedIndex.value,
+          selectedIndex: pageModel.selectedIndex.value,
           onDestinationSelected: (int index) =>
-              controller.selectedIndex.value = index,
+              pageModel.selectedIndex.value = index,
           destinations: const [
             NavigationDestination(
               icon: Icon(Icons.apps_outlined),
@@ -30,9 +30,9 @@ class BottomNavigationPage extends StatelessWidget {
         ),
       ),
       body: ValueListenableBuilder(
-        valueListenable: controller.selectedIndex,
+        valueListenable: pageModel.selectedIndex,
         builder: (context, index, _) {
-          return controller.getPage(index);
+          return pageModel.getPage(index);
         },
       ),
     );

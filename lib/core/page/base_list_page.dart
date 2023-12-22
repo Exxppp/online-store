@@ -10,22 +10,22 @@ abstract class BaseListPage<T, TModel> extends StatefulWidget {
 }
 
 abstract class BaseListPageState<T extends BaseListPage,
-    TController extends ChangeNotifier> extends State<T> {
-  late final TController _controller = createController();
+    TModel extends ChangeNotifier> extends State<T> {
+  late final TModel _pageModel = createModel();
 
-  TController get controller {
-    return _controller;
+  TModel get pageModel {
+    return _pageModel;
   }
 
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_controllerListener);
+    _pageModel.addListener(_controllerListener);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_controllerListener);
+    _pageModel.removeListener(_controllerListener);
     super.dispose();
   }
 
@@ -47,5 +47,5 @@ abstract class BaseListPageState<T extends BaseListPage,
 
   Widget buildBody(BuildContext context);
 
-  TController createController();
+  TModel createModel();
 }

@@ -16,18 +16,18 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  final controller = ProductDetailsModel();
+  final pageModel = ProductDetailsModel();
 
   @override
   void initState() {
     super.initState();
-    controller.loadProduct(widget.productId);
-    controller.addListener(_controllerListener);
+    pageModel.loadProduct(widget.productId);
+    pageModel.addListener(_controllerListener);
   }
 
   @override
   void dispose() {
-    controller.removeListener(_controllerListener);
+    pageModel.removeListener(_controllerListener);
     super.dispose();
   }
 
@@ -48,16 +48,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   Widget buildBody() {
-    if (controller.isLoading) {
+    if (pageModel.isLoading) {
       return const Center(child: CircularProgressIndicator());
-    } else if (controller.loadingError != null) {
-      return DataUploadErrorWidget(textError: controller.loadingError);
+    } else if (pageModel.loadingError != null) {
+      return DataUploadErrorWidget(textError: pageModel.loadingError);
     } else {
       return ListView(
         children: [
           // Product image
           ImageNetwork(
-            url: controller.product.imageUrl,
+            url: pageModel.product.imageUrl,
             height: 400,
             fit: BoxFit.contain,
           ),
@@ -67,7 +67,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
             child: Text(
-              controller.product.title,
+              pageModel.product.title,
               style:
                   const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
             ),
@@ -77,7 +77,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
             child: Text(
-              'Описание товара: ${controller.product.productDescription ?? ''}',
+              'Описание товара: ${pageModel.product.productDescription ?? ''}',
             ),
           ),
         ],

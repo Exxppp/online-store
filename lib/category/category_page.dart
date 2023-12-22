@@ -18,16 +18,16 @@ class CategoryPage extends BaseListPage {
 class _CategoryPageState
     extends BaseListPageState<CategoryPage, CategoryModel> {
   @override
-  CategoryModel createController() {
+  CategoryModel createModel() {
     return CategoryModel();
   }
 
   @override
   Widget buildBody(context) {
-    if (controller.isLoading) {
+    if (pageModel.isLoading) {
       return const Center(child: CircularProgressIndicator());
-    } else if (controller.loadingError != null) {
-      return DataUploadErrorWidget(textError: controller.loadingError);
+    } else if (pageModel.loadingError != null) {
+      return DataUploadErrorWidget(textError: pageModel.loadingError);
     } else {
       return GridView.builder(
         padding: const EdgeInsets.all(8),
@@ -36,19 +36,19 @@ class _CategoryPageState
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
         ),
-        itemCount: controller.categories.length,
+        itemCount: pageModel.categories.length,
         itemBuilder: (context, index) {
           return CategoryGridItem(
             onTap: () {
               Navigator.push(
                 context,
                 AppRoutes.productList(
-                  categoryId: controller.categories[index].categoryId,
-                  title: controller.categories[index].title,
+                  categoryId: pageModel.categories[index].categoryId,
+                  title: pageModel.categories[index].title,
                 ),
               );
             },
-            category: controller.categories[index],
+            category: pageModel.categories[index],
           );
         },
       );
